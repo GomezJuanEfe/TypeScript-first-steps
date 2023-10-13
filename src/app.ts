@@ -1,15 +1,3 @@
-const tasks = [
-  { id: 1, title: 'Completar taller de TypeScript', completed: false },
-  { id: 2, title: 'Estudiar programación funcional', completed: false },
-  { id: 3, title: 'Preparar presentación sobre TypeScript', completed: true },
-  { id: 4, title: 'Leer libro de TypeScript avanzado', completed: false },
-  { id: 5, title: 'Resolver ejercicios de TypeScript', completed: false },
-  { id: 6, title: 'Hacer ejercicio', completed: true },
-  { id: 7, title: 'Comprar víveres', completed: false },
-  { id: 8, title: 'Llamar al médico', completed: false },
-  { id: 9, title: 'Limpiar la casa', completed: true },
-  { id: 10, title: 'Actualizar el CV', completed: false }
-];
 
 // 1
 type Task = {id: number, title: string, completed: boolean};
@@ -27,74 +15,53 @@ const addTask = (list:TaskList, task:Task): TaskList => {
 }
 
 // 5
-const completeTask = (list:TaskList, id:number):TaskList => {
-  return list.map(item => {
-    if (item.id === id) item.completed = true;
-    return item
-  })
+const completeTask = (list:TaskList, id:number): TaskList => {
+  return list.map(task => 
+    task.id === id ? {...task, completed: true} : task
+  )
 }
-
-console.log("completeTask", completeTask(tasks, 2));
 
 // 6
-const filterTasks = (list:TaskList, filter:boolean):TaskList => {
+const filterTasks = (list:TaskList, filter:boolean): TaskList => {
   return list.filter(item => item.completed === filter);
 }
-
-console.log("Filter tasks", filterTasks(tasks, true));
 
 // 7
 const printTaskList = (list:TaskList): void => {
   list.forEach( item => {
-    console.log(item.title, item.completed);
+    console.log(`Titulo: ${item.title} | Completed: ${item.completed}`);
   });
 }
 
-console.log('Print tasks')
-printTaskList(tasks);
-
 // 8
-const runApp = (): any => {
-  let myList: TaskList = [
-    { id: 1, title: 'This is an example', completed: false },
+const runApp = (): void => {
+  let tasks = [
+    { id: 1, title: 'Completar taller de TypeScript', completed: false },
+    { id: 2, title: 'Estudiar programación funcional', completed: false },
+    { id: 3, title: 'Preparar presentación sobre TypeScript', completed: true },
+    { id: 4, title: 'Leer libro de TypeScript avanzado', completed: false },
+    { id: 5, title: 'Resolver ejercicios de TypeScript', completed: false },
+    { id: 6, title: 'Hacer ejercicio', completed: true },
+    { id: 7, title: 'Comprar víveres', completed: false },
+    { id: 8, title: 'Llamar al médico', completed: false },
+    { id: 9, title: 'Limpiar la casa', completed: true },
+    { id: 10, title: 'Actualizar el CV', completed: false }
   ];
 
-  const getList = () => {
-    return myList;
-  }
-  const addTask = (task: Task): TaskList => {
-    myList = [...myList, task]; // Update the myList variable here
-    return myList;
-  };
+  const task1: Task = { id: 11, title: 'Correguir prueba de TypeScript', completed: false };
+  const task2: Task = { id: 12, title: 'Actualizar perfil LinkedIn', completed: false };
 
-  const completeTask = (id: number): TaskList => {
-    myList.forEach((item) => {
-      if (item.id === id) {
-        item.completed = true
-      }
-    });
-    return myList
-  };
+  tasks = addTask(tasks, task1);
+  tasks = addTask(tasks, task2);
 
-  const filterTasks = (filter:boolean):TaskList => {
-    return myList.filter(item => item.completed === filter);
-  }
+  tasks = completeTask(tasks, 1);
 
+  const completedTasks = filterTasks(tasks, true);
 
-  return {
-    getList,
-    addTask,
-    completeTask,
-    filterTasks
-  };
+  printTaskList(completedTasks);
+
+  console.log(tasks);
 };
 
 // 9
-const newList = runApp();
-
-newList.addTask({ id: 2, title: 'Another task', completed: false });
-newList.completeTask(2);
-
-console.log(newList.getList());
-
-console.log(newList.filterTasks(true));
+runApp();
